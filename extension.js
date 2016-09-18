@@ -87,30 +87,40 @@ function activate(context) {
 
   context.subscriptions.push(
     vscode.commands.registerTextEditorCommand("extension.extendedCursorMove.deleteLeft", function (editor, edit) {
-      for (var i = 0; i < editor._selections.length; i++) {
-        var lineNum = editor._selections[0].active.line;
-        var charNum = editor._selections[0].active.character;
+      console.log(editor);
+      var selections = editor._selections;
+      var coords = {
+        start: {},
+        end: {}
+      };
+      for (var i = 0; i < selections.length; i++) {
+        var lineNum = selections[i].active.line;
+        var charNum = selections[i].active.character;
         var doc = getDocument(editor);
         var line = doc._lines[lineNum];
-        if (charNum != 0) {
-          var firstChar = line.search(/\S/i);
-          var coords = {
-            start: {},
-            end: {}
-          };
-          if (firstChar != -1 && firstChar < charNum) { //there are some non-whitespace chars and the cursor position is at the right of the first non-white space character, delete all left character execpt indent 
-            coords.start.line = lineNum;
-            coords.end.line = lineNum;
-            coords.start.char = firstChar;
-            coords.end.char = charNum;
-          } else {
-            coords.start.line = lineNum;
-            coords.end.line = lineNum;
-            coords.start.char = 0;
-            coords.end.char = charNum;
-          }
-          console.log(coords);
+        if (selections[i].start.line != selections[i].end.line) {
+          coords.start.line = selections[i].start.line;
+          coords.end.line = selections[i].end.line;
+          coords.start.char = 0;
+          coords.end.char = doc._lines[coords.end.line].length;
           applyEdit(editor, coords, '');
+        } else {
+          if (charNum != 0) {
+            var firstChar = line.search(/\S/i);
+            if (firstChar != -1 && firstChar < charNum) { //there are some non-whitespace chars and the cursor position is at the right of the first non-white space character, delete all left character execpt indent 
+              coords.start.line = lineNum;
+              coords.end.line = lineNum;
+              coords.start.char = firstChar;
+              coords.end.char = charNum;
+            } else {
+              coords.start.line = lineNum;
+              coords.end.line = lineNum;
+              coords.start.char = 0;
+              coords.end.char = charNum;
+            }
+            console.log(coords);
+            applyEdit(editor, coords, '');
+          }
         }
       }
     })
