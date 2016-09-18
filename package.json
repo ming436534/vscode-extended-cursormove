@@ -14,6 +14,12 @@
   "activationEvents": [
     "onCommand:extension.extendedCursorMove.cursorHome",
     "onCommand:extension.extendedCursorMove.cursorHomeSelect",
+    "onCommand:extension.extendedCursorMove.cursorLineFirstNonWhitespaceCharacter",
+    "onCommand:extension.extendedCursorMove.cursorLineFirstNonWhitespaceCharacterSelect",
+    "onCommand:extension.extendedCursorMove.cursorLineLastNonWhitespaceCharacter",
+    "onCommand:extension.extendedCursorMove.cursorLineLastNonWhitespaceCharacterSelect",
+    "onCommand:extension.extendedCursorMove.deleteLeft",
+    "onCommand:extension.extendedCursorMove.deleteRight",
     "onCommand:extension.extendedCursorMove.cursorEnd",
     "onCommand:extension.extendedCursorMove.cursorEndSelect",
     "onCommand:extension.extendedCursorMove.cursorTopLeft",
