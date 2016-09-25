@@ -107,17 +107,10 @@ function activate(context) {
         } else {
           if (charNum != 0) {
             var firstChar = line.search(/\S/i);
-            if (firstChar != -1 && firstChar < charNum) { //there are some non-whitespace chars and the cursor position is at the right of the first non-white space character, delete all left character execpt indent 
-              coords.start.line = lineNum;
-              coords.end.line = lineNum;
-              coords.start.char = firstChar;
-              coords.end.char = charNum;
-            } else {
-              coords.start.line = lineNum;
-              coords.end.line = lineNum;
-              coords.start.char = 0;
-              coords.end.char = charNum;
-            }
+            coords.start.line = lineNum;
+            coords.end.line = lineNum;
+            coords.start.char = 0;
+            coords.end.char = charNum;
             console.log(coords);
             applyEdit(editor, coords, '');
           }
